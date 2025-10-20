@@ -1,18 +1,10 @@
-from flask import Flask, redirect, url_for, render_template, request, session, flash
-from datetime import timedelta
-from flask_sqlalchemy import SQLAlchemy
-
 app = Flask(__name__)
 app.secret_key = "wxyz"
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///users.sqlite3'  # RENDER ROOT!
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///users.sqlite3'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.permanent_session_lifetime = timedelta(days=5)
 
-db = SQLAlchemy(app)
-with app.app_context():
-    db.create_all()
-
-# ← MOVE CLASS HERE!
+# 1. CLASS FIRST!
 class users(db.Model):
     id = db.Column("id", db.Integer, primary_key=True)
     name = db.Column(db.String(100))
@@ -21,6 +13,12 @@ class users(db.Model):
     def __init__(self, name, email):
         self.name = name
         self.email = email
+
+db = SQLAlchemy(app)
+
+# 2. CREATE TABLES AFTER CLASS!
+with app.app_context():
+    db.create_all()
 
 @app.route('/')
 def home():
