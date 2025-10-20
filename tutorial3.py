@@ -1,23 +1,17 @@
 from flask import Flask, redirect, url_for, render_template, request, session, flash
 from datetime import timedelta
 from flask_sqlalchemy import SQLAlchemy
-import os
 
 app = Flask(__name__)
 app.secret_key = "wxyz"
-
-# PERFECT DYNAMIC DB URL
-db_url = os.getenv('DATABASE_URL', 'sqlite:///instance/users.sqlite3')
-if db_url.startswith("postgres://"):
-    db_url = db_url.replace("postgres://", "postgresql://", 1)
-app.config['SQLALCHEMY_DATABASE_URI'] = db_url
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///instance/users.sqlite3'  # ← YOUR LOCAL!
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.permanent_session_lifetime = timedelta(days=5)
 
 db = SQLAlchemy(app)
 with app.app_context():
     db.create_all()
-
+    
 class users(db.Model):
     id = db.Column("id", db.Integer, primary_key=True)
     name = db.Column(db.String(100))
