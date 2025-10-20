@@ -11,9 +11,8 @@ app.permanent_session_lifetime = timedelta(days=5)
 db = SQLAlchemy(app)
 with app.app_context():
     db.create_all()
-    # REBUILD TABLES IN UPLOADED DB!
-    if not users.query.first():
-        print("EMPTY DB - Tables ready!")    
+
+# ← MOVE CLASS HERE!
 class users(db.Model):
     id = db.Column("id", db.Integer, primary_key=True)
     name = db.Column(db.String(100))
@@ -22,6 +21,10 @@ class users(db.Model):
     def __init__(self, name, email):
         self.name = name
         self.email = email
+
+# REBUILD TABLES IN UPLOADED DB!
+if not users.query.first():
+    print("EMPTY DB - Tables ready!")
 
 @app.route('/')
 def home():
