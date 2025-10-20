@@ -9,8 +9,11 @@ app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.permanent_session_lifetime = timedelta(days=5)
 
 db = SQLAlchemy(app)
-with app.app_context():
+    with app.app_context():
     db.create_all()
+    # REBUILD TABLES IN UPLOADED DB!
+    if not users.query.first():
+        print("EMPTY DB - Tables ready!")
     
 class users(db.Model):
     id = db.Column("id", db.Integer, primary_key=True)
