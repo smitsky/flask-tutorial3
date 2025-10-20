@@ -22,10 +22,6 @@ class users(db.Model):
         self.name = name
         self.email = email
 
-# REBUILD TABLES IN UPLOADED DB!
-if not users.query.first():
-    print("EMPTY DB - Tables ready!")
-
 @app.route('/')
 def home():
     return render_template("index.html")
