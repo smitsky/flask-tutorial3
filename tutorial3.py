@@ -4,7 +4,7 @@ from flask_sqlalchemy import SQLAlchemy
 
 app = Flask(__name__)
 app.secret_key = "wxyz"
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///instance/users.sqlite3'  # ← YOUR LOCAL!
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///users.sqlite3'  # RENDER ROOT!
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.permanent_session_lifetime = timedelta(days=5)
 
